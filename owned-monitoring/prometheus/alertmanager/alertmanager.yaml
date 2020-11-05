@@ -9,4 +9,4 @@ route:
 receivers:
 - name: 'webhook'
   webhook_configs:
-  - url: 'http://qq.wumii.net:5700/'
+  - url: 'http://qq.example.com:5700/'

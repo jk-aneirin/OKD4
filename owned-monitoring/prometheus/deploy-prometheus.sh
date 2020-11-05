@@ -3,7 +3,7 @@
 set -o nounset
 set -o errexit
 
-oc new-project wumii-monitoring --display-name='wumii-monitoring'
+oc new-project my-monitoring --display-name='my-monitoring'
 
 # install prometheus operator
 if ! oc get packagemanifest/prometheus -n openshift-marketplace &> /dev/null; then

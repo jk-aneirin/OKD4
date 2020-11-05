@@ -1,0 +1,45 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: traefik-ingress
+  name: whoami
+  labels:
+    app: whoami
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: whoami
+  template:
+    metadata:
+      labels:
+        app: whoami
+    spec:
+      containers:
+        - name: whoami
+          image: traefik/whoami
+          ports:
+            - name: web
+              containerPort: 80
+          securityContext:
+              capabilities:
+                  drop:
+                  - ALL
+                  add:
+                  - NET_BIND_SERVICE
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+  namespace: traefik-ingress
+spec:
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+  selector:
+    app: whoami

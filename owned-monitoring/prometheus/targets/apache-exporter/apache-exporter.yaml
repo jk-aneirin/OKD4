@@ -3,7 +3,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: lb-1-apache-exporter
-  namespace: wumii-monitoring
+  namespace: my-monitoring
   labels:
     app: lb-1-apache-exporter
 spec:
@@ -22,7 +22,7 @@ spec:
           image: aneirin/apache_exporter:v0.7.0
           env:
             - name: lb
-              value: "lb-1.wumii.net"
+              value: "lb-1.my.net"
           ports:
             - containerPort: 9117
               protocol: TCP
@@ -32,7 +32,7 @@ kind: Service
 apiVersion: v1
 metadata:
     name: lb-1-apache-exporter
-    namespace: wumii-monitoring
+    namespace: my-monitoring
     labels:
         managedBy: infra-prometheus
 spec:
@@ -48,7 +48,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: lb-2-apache-exporter
-  namespace: wumii-monitoring
+  namespace: my-monitoring
   labels:
     app: lb-2-apache-exporter
 spec:
@@ -67,7 +67,7 @@ spec:
           image: aneirin/apache_exporter:v0.7.0
           env:
             - name: lb
-              value: "lb-2.wumii.net"
+              value: "lb-2.my.net"
           ports:
             - containerPort: 9117
               protocol: TCP
@@ -77,7 +77,7 @@ kind: Service
 apiVersion: v1
 metadata:
     name: lb-2-apache-exporter
-    namespace: wumii-monitoring
+    namespace: my-monitoring
     labels:
         managedBy: infra-prometheus
 spec:

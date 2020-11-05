@@ -11,8 +11,8 @@ else
 	oc create -f grafana-operator.yaml
 fi
 
-# wumii-ca is used for authentication with ldaps
-oc create configmap wumii-ca --from-file=./wumii-internal.crt
+# my-ca is used for authentication with ldaps
+oc create configmap my-ca --from-file=./my-internal.crt
 
 # The grafana configuration file must be deployed first or grafana will fail to deploy
 oc create -f ldap-config.yaml

@@ -3,16 +3,16 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: prometheus-og
-  namespace: wumii-monitoring
+  namespace: my-monitoring
 spec:
   targetNamespaces:
-  - wumii-monitoring
+  - my-monitoring
 ---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: prometheus-sub
-  namespace: wumii-monitoring 
+  namespace: my-monitoring 
 spec:
   channel: beta
   name: prometheus

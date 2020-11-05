@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoamiingressroute
+  namespace: traefik-ingress
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`whoami.apps.okd-infra.wumi.ai`) && PathPrefix(`/notls`)
+    kind: Rule
+    services:
+    - name: whoami
+      port: 80
+

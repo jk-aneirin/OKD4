@@ -6,7 +6,7 @@ metadata:
     prometheus: example
     role: alert-rules
   name: prometheus-example-rules
-  namespace: wumii-monitoring
+  namespace: my-monitoring
 spec:
   groups:
   - name: ./example.rules
@@ -18,7 +18,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
   name: prometheus
-  namespace: wumii-monitoring
+  namespace: my-monitoring
 spec:
   replicas: 1
   serviceAccountName: prometheus-k8s
@@ -35,7 +35,7 @@ spec:
                       storage: 100Gi 
   alerting:
       alertmanagers:
-      - namespace: wumii-monitoring
+      - namespace: my-monitoring
         name: alertmanager
         port: web
   ruleSelector:
