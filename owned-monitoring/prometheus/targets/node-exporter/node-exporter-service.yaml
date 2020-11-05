@@ -1,0 +1,29 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: node-exporter
+  labels:
+    managedBy: infra-prometheus
+spec:
+  ports:
+    - name: metrics
+      port: 9100
+      targetPort: 9100
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+ name: node-exporter
+ labels:
+   managedBy: infra-prometheus
+subsets:
+ - addresses:
+     - ip: 10.2.10.133
+   ports:
+     - port: 9100
+       name: "metrics"
+ - addresses:
+     - ip: 10.2.10.134
+   ports:
+     - port: 9100
+       name: "metrics"

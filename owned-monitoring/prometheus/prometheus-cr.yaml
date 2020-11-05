@@ -1,0 +1,44 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus: example
+    role: alert-rules
+  name: prometheus-example-rules
+  namespace: wumii-monitoring
+spec:
+  groups:
+  - name: ./example.rules
+    rules:
+    - alert: ExampleAlert
+      expr: vector(1)
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+  namespace: wumii-monitoring
+spec:
+  replicas: 1
+  serviceAccountName: prometheus-k8s
+  serviceMonitorSelector:
+      matchLabels:
+          managedBy: infra-prometheus
+  storage:
+      volumeClaimTemplate:
+          spec:
+              accessModes: [ "ReadWriteOnce" ]
+              storageClassName: rook-ceph-block
+              resources:
+                  requests:
+                      storage: 100Gi 
+  alerting:
+      alertmanagers:
+      - namespace: wumii-monitoring
+        name: alertmanager
+        port: web
+  ruleSelector:
+      matchLabels:
+        prometheus: example
+        role: alert-rules

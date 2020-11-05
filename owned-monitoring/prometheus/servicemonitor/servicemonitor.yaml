@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: exporters
+  labels:
+    managedBy: infra-prometheus
+spec:
+  selector:
+    matchLabels:
+      managedBy: infra-prometheus
+  endpoints:
+  - port: metrics
+    interval: 5s

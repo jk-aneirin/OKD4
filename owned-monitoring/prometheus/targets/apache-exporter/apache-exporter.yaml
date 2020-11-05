@@ -1,0 +1,90 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: lb-1-apache-exporter
+  namespace: wumii-monitoring
+  labels:
+    app: lb-1-apache-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lb-1-apache-exporter
+  template:
+    metadata:
+      labels:
+        app: lb-1-apache-exporter
+        exporter: infra
+    spec:
+      containers:
+        - name: lb-1-apache-exporter
+          image: aneirin/apache_exporter:v0.7.0
+          env:
+            - name: lb
+              value: "lb-1.wumii.net"
+          ports:
+            - containerPort: 9117
+              protocol: TCP
+      restartPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: lb-1-apache-exporter
+    namespace: wumii-monitoring
+    labels:
+        managedBy: infra-prometheus
+spec:
+    selector:
+        app: lb-1-apache-exporter
+    ports:
+        - name: metrics
+          protocol: TCP
+          port: 9117
+          targetPort: 9117
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: lb-2-apache-exporter
+  namespace: wumii-monitoring
+  labels:
+    app: lb-2-apache-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lb-2-apache-exporter
+  template:
+    metadata:
+      labels:
+        app: lb-2-apache-exporter
+        exporter: infra
+    spec:
+      containers:
+        - name: lb-2-apache-exporter
+          image: aneirin/apache_exporter:v0.7.0
+          env:
+            - name: lb
+              value: "lb-2.wumii.net"
+          ports:
+            - containerPort: 9117
+              protocol: TCP
+      restartPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: lb-2-apache-exporter
+    namespace: wumii-monitoring
+    labels:
+        managedBy: infra-prometheus
+spec:
+    selector:
+        app: lb-2-apache-exporter
+    ports:
+        - name: metrics
+          protocol: TCP
+          port: 9117
+          targetPort: 9117
